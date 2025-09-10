@@ -6,13 +6,7 @@ document.body.appendChild(mySideBar);
 
 function toggleSideBar() {
     console.log("in toggleSideBar");
-    console.log(mySideBar.style.display);
-    if (mySideBar.style.display == 'none') {
-        mySideBar.style.display = 'flex';
-    } else{
-        console.log("in here");
-        mySideBar.style.display = 'none';
-    }
+    mySideBar.classList.toggle('visible');
 }
 
 function handleKeyPress(event) {
@@ -21,4 +15,5 @@ function handleKeyPress(event) {
         toggleSideBar();
     }
 }
+
 document.addEventListener('keydown', handleKeyPress);
