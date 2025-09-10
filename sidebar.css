@@ -4,7 +4,7 @@
   padding: 16px;
   background-color: #181818; /* slightly darker than ChatGPT's sidebar */
   position: fixed;
-  top: 2.5vh;
+  top: 10vh;
   right: 20px;
   z-index: 9999;
   border-radius: 16px;
