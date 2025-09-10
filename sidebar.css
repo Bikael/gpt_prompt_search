@@ -1,0 +1,16 @@
+.custom-sidebar {
+  height: 80vh;
+  width: 250px;
+  padding: 16px;
+  background-color: #181818; /* slightly darker than ChatGPT's sidebar */
+  position: fixed;
+  top: 2.5vh;
+  right: 20px;
+  z-index: 9999;
+  border-radius: 16px;
+  border-left: none;
+  box-shadow: -4px 0 16px rgba(0,0,0,0.18);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}

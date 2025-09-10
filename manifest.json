@@ -1,10 +1,26 @@
 {
-  "name": "Hello Extensions",
-  "description": "Base Level Extension",
-  "version": "1.0",
+  "name": "My Side Panel Extension",
   "manifest_version": 3,
+  "version": "1.0",
+  "description": "A side panel extension.",
+  "permissions": [
+    "sidePanel" 
+  ],
   "action": {
-    "default_popup": "hello.html",
-    "default_icon": "hello_extensions.png"
-  }
+    "default_title": "Open My Panel"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "js": ["content.js"],
+      "css" : ["sidebar.css"],
+      "matches": [
+        "https://chatgpt.com/*"
+      ]
+    }
+  ]
+
 }
+
