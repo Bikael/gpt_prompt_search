@@ -2,10 +2,10 @@
   height: 80vh;
   width: 200px;
   padding: 16px;
-  background-color: #181818; /* slightly darker than ChatGPT's sidebar */
+  background-color: #181818;
   position: fixed;
   top: 10%;
-  right: -240px; /* Hide completely off-screen (width + padding) */
+  right: -240px;
   z-index: 9999;
   border-radius: 16px;
   border-left: none;
@@ -17,5 +17,9 @@
 }
 
 .custom-sidebar.visible {
-  right: 10px; /* Slide in */
+  right: 10px; 
+}
+
+.prompt-cards{
+    
 }
