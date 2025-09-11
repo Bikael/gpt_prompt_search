@@ -1,5 +1,6 @@
 class ChatterBoxSidebar {
     constructor() {
+        this.prompts = [];
         this.mySideBar = this.createSidebar();
         this.observeMessages();
         document.addEventListener('keydown', this.handleKeyPress.bind(this));
@@ -12,20 +13,26 @@ class ChatterBoxSidebar {
         return div;
     }
 
-    getUserMessages() {
-        const prompts = [];
+    getNewPrompts() {
+        const new_prompts = [];
         const nodes = document.querySelectorAll('[data-message-author-role="user"]');
         nodes.forEach(node => {
-            console.log(node.textContent);
-            prompts.push(node.textContent);
+            if (!this.prompts.includes(node.textContent)){
+                new_prompts.push(node.textContent);
+                console.log(node.textContent);
+            }
         });
-        return prompts;
+        this.prompts = this.prompts.concat(new_prompts);
+        if (new_prompts.length > 0) {
+            this.addCard(new_prompts);
+        }
+        return new_prompts;
     }
 
     observeMessages() {
         const messageContainer = document.querySelector('div[role="presentation"]');
         if (!messageContainer) return;
-        this.getUserMessages();
+        this.getNewPrompts();
         const observer = new MutationObserver((mutationsList) => {
             for (const mutation of mutationsList) {
                 for (const node of mutation.addedNodes) {
@@ -34,7 +41,7 @@ class ChatterBoxSidebar {
                         (node.matches?.('[data-message-author-role="user"]') ||
                          node.querySelector?.('[data-message-author-role="user"]'))
                     ) {
-                        this.getUserMessages();
+                        this.getNewPrompts();
                         return;
                     }
                 }
@@ -54,10 +61,12 @@ class ChatterBoxSidebar {
     }
 
     addCard(prompts) {
-        const card = document.createElement('div');
-        card.className = 'prompt-card';
-        card.innerText = prompts[0] || '';
-        this.mySideBar.appendChild(card);
+        prompts.forEach(prompt =>{
+            const card = document.createElement('div');
+            card.className = 'prompt-card';
+            card.innerText = prompt;
+            this.mySideBar.appendChild(card);
+        });
     }
 }
 
