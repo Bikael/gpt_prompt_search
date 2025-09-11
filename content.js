@@ -17,10 +17,12 @@ class ChatterBoxSidebar {
         header.innerText = `prompts: ${this.prompts.length}`
         div.appendChild(header)
 
+        this.header = header;
+
         return div;
     }
     updatePromptCount(){
-
+        this.header.innerText = `prompts: ${this.prompts.length}`;
     }
 
     getNewPrompts() {
@@ -34,6 +36,7 @@ class ChatterBoxSidebar {
         });
         this.prompts = this.prompts.concat(new_prompts);
         if (new_prompts.length > 0) {
+            this.updatePromptCount();
             this.addCard(new_prompts);
         }
         return new_prompts;
