@@ -4,13 +4,23 @@ class ChatterBoxSidebar {
         this.mySideBar = this.createSidebar();
         this.observeMessages();
         document.addEventListener('keydown', this.handleKeyPress.bind(this));
+
     }
 
     createSidebar() {
         const div = document.createElement('div');
         div.className = 'custom-sidebar';
         document.body.appendChild(div);
+
+        const header = document.createElement('h1');
+        header.className = 'num-prompts';
+        header.innerText = `prompts: ${this.prompts.length}`
+        div.appendChild(header)
+
         return div;
+    }
+    updatePromptCount(){
+
     }
 
     getNewPrompts() {
