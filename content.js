@@ -25,16 +25,24 @@ class ChatterBoxSidebar {
         this.header.innerText = `prompts: ${this.prompts.length}`;
     }
 
+    getUserMessages(){
+        const messages = document.querySelectorAll('[data-message-author-role="user"]');
+        return messages
+    }
+
     getNewPrompts() {
         const new_prompts = [];
         const nodes = document.querySelectorAll('[data-message-author-role="user"]');
         nodes.forEach(node => {
             if (!this.prompts.includes(node.textContent)){
-                new_prompts.push(node.textContent);
+                new_prompts.push(node);
                 console.log(node.textContent);
             }
         });
-        this.prompts = this.prompts.concat(new_prompts);
+        new_prompts.forEach(prompt =>{
+            this.prompts.push(prompt.textContent);
+        })
+        
         if (new_prompts.length > 0) {
             this.updatePromptCount();
             this.addCard(new_prompts);
@@ -77,9 +85,13 @@ class ChatterBoxSidebar {
         prompts.forEach(prompt =>{
             const card = document.createElement('div');
             card.className = 'prompt-card';
-            card.innerText = prompt;
+            card.innerText = prompt.textContent;
+            card.addEventListener('click', (event) =>{
+                prompt.scrollIntoView({ behavior: "smooth", block: "center" });
+            });
             this.mySideBar.appendChild(card);
         });
+        
     }
 }
 
