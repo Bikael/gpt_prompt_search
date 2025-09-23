@@ -3,26 +3,49 @@ class ChatterBoxSidebar {
         this.prompts = [];
         this.mySideBar = this.createSidebar();
         this.observeMessages();
+        this.initSidebarState()
+        
         document.addEventListener('keydown', this.handleKeyPress.bind(this));
 
     }
 
+        
     createSidebar() {
-        const div = document.createElement('div');
-        div.className = 'custom-sidebar';
-        document.body.appendChild(div);
+    const div = document.createElement('div');
+    div.className = 'custom-sidebar';
+    document.body.appendChild(div);
 
-        const header = document.createElement('h1');
-        header.className = 'num-prompts';
-        header.innerText = `prompts: ${this.prompts.length}`
-        div.appendChild(header)
+    const header = document.createElement('h1');
+    header.className = 'num-prompts';
+    header.innerText = `${this.prompts.length} prompts`;
+    div.appendChild(header);
 
-        this.header = header;
+    this.header = header;
 
-        return div;
+    // New scrollable content container
+    const content = document.createElement('div');
+    content.className = 'sidebar-content';
+    div.appendChild(content);
+
+    this.content = content;
+
+    return div;
+}
+
+
+    async initSidebarState(){
+        try {
+        const result = await chrome.storage.local.get(['divVisible']);
+        console.log(result.divVisible);
+        if (result.divVisible) {
+            this.toggleSideBar();
+        }
+    } catch (err) {
+        console.error("Error getting storage:", err);
+    }
     }
     updatePromptCount(){
-        this.header.innerText = `prompts: ${this.prompts.length}`;
+        this.header.innerText = `${this.prompts.length} prompts`;
     }
 
     getUserMessages(){
@@ -73,6 +96,13 @@ class ChatterBoxSidebar {
 
     toggleSideBar() {
         this.mySideBar.classList.toggle('visible');
+        if(this.mySideBar.classList.contains("visible")){
+            chrome.storage.local.set({ divVisible: true });
+        }else{
+            chrome.storage.local.set({ divVisible: false });
+        }
+        
+        
     }
 
     handleKeyPress(event) {
@@ -85,11 +115,12 @@ class ChatterBoxSidebar {
         prompts.forEach(prompt =>{
             const card = document.createElement('div');
             card.className = 'prompt-card';
-            card.innerText = prompt.textContent;
+            let prompt_content = prompt.textContent.replace(/[\r\n]/g, '');
+            card.innerText = prompt_content;
             card.addEventListener('click', (event) =>{
                 prompt.scrollIntoView({ behavior: "smooth", block: "center" });
             });
-            this.mySideBar.appendChild(card);
+            this.content.appendChild(card);
         });
         
     }

@@ -4,7 +4,8 @@
   "version": "1.0",
   "description": "A side panel extension.",
   "permissions": [
-    "sidePanel" 
+    "sidePanel", 
+    "storage"
   ],
   "action": {
     "default_title": "Open My Panel"
