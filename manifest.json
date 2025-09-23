@@ -10,9 +10,6 @@
   "action": {
     "default_title": "Open My Panel"
   },
-  "background": {
-    "service_worker": "background.js"
-  },
   "content_scripts": [
     {
       "js": ["content.js"],
